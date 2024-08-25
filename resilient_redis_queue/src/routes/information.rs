@@ -1,8 +1,8 @@
 use actix_web::{web, HttpResponse};
 use serde_json::json;
 use std::collections::HashMap;
-use crate::AppState;
 use crate::utils::redis::info;
+use crate::AppState;
 
 fn parse_redis_info(info: &str) -> HashMap<String, HashMap<String, String>> {
     let mut result = HashMap::new();

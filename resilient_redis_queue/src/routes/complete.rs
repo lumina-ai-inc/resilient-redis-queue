@@ -1,8 +1,8 @@
 use actix_web::{ web, HttpResponse, Responder };
 use crate::AppState;
-use models::rrq::status::{ StatusPayload, StatusResult::{ Success, Failure } };
+use crate::models::status::{ StatusPayload, StatusResult::{ Success, Failure } };
 use crate::utils::{ success::process_successful_item, failure::process_failed_item };
-use shared::redis::Connection;
+use crate::utils::config_redis::Connection;
 
 pub async fn complete_data(
     data: web::Json<Vec<StatusPayload>>,

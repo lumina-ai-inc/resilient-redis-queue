@@ -1,8 +1,8 @@
 use actix_web::{ web, HttpResponse, Responder };
-use models::{consume::{ConsumePayload, ConsumeResponse}, queue::QueuePayload};
-use utils::namespace::{ MAIN_NAMESPACE, PRIVATE_NAMESPACE, REGISTRY_NAMESPACE };
-use utils::redis::{ blmove, lrange, llen, register_in_hash };
-use AppState;
+use crate::models::{consume::{ConsumePayload, ConsumeResponse}, queue::QueuePayload};
+use crate::utils::namespace::{ MAIN_NAMESPACE, PRIVATE_NAMESPACE, REGISTRY_NAMESPACE };
+use crate::utils::redis::{ blmove, lrange, llen, register_in_hash };
+use crate::AppState;
 
 pub async fn consume_data(
     data: web::Json<ConsumePayload>,

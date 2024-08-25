@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use serde::Serialize;
-use configs::deadpool_redis::{ cmd, RedisResult, Pipeline, Connection };
+use crate::utils::config_redis::{ cmd, RedisResult, Pipeline, Connection };
 
 
 // Redis Info Operations
@@ -87,7 +87,7 @@ pub async fn register_in_hash<T: Serialize>(
     let serialized = serde_json::to_string(value).expect("Failed to serialize value");
 
     // Set the field in the hash
-    cmd("HSET").arg(&[hash_key, field, &serialized]).query_async::<_, ()>(conn).await?;
+    cmd("HSET").arg(&[hash_key, field, &serialized]).query_async(conn).await?;
 
     // Set expiration if provided
     if let Some(exp) = expiration_seconds {
@@ -99,7 +99,7 @@ pub async fn register_in_hash<T: Serialize>(
             expire_cmd.arg("NX");
         }
 
-        expire_cmd.query_async::<_, ()>(conn).await?;
+        expire_cmd.query_async(conn).await?;
     }
 
     Ok(())

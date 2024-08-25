@@ -1,5 +1,5 @@
 use serde::{ Deserialize, Serialize };
-use crate::rrq::queue::QueuePayload;
+use super::queue::QueuePayload;
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct ConsumePayload {

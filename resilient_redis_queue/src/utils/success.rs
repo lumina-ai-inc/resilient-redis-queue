@@ -1,8 +1,8 @@
-use configs::deadpool_redis::Connection;
-use models::{ status::StatusPayload, publish::PublishPayload, queue::QueuePayload };
-use utils::errors::ProcessError;
-use utils::redis::{remove_item_by_index, publish_to_channel};
-use utils::namespace::PRIVATE_NAMESPACE;
+use crate::utils::config_redis::Connection;
+use crate::models::{ status::StatusPayload, publish::PublishPayload, queue::QueuePayload };
+use crate::utils::errors::ProcessError;
+use crate::utils::redis::{remove_item_by_index, publish_to_channel};
+use crate::utils::namespace::PRIVATE_NAMESPACE;
 
 pub async fn process_successful_item(
     conn: &mut Connection,

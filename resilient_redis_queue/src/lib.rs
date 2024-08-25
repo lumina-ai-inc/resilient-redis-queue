@@ -7,16 +7,15 @@ pub mod routes;
 pub mod utils;
 pub mod services;
 pub mod models;
-pub mod configs;
 
-use configs::deadpool_redis::create_pool;
+use crate::utils::config_redis::{create_pool, Pool};
 
 pub struct AppState {
     redis_pool: Arc<Pool>,
 }
 
 #[actix_web::main]
-async fn main() -> std::io::Result<()> {
+pub async fn main() -> std::io::Result<()> {
     
     println!("Starting...");
 

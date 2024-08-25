@@ -1,7 +1,7 @@
 use actix_web::{web, HttpResponse, Responder};
-use models::rrq::{produce::ProducePayload, queue::QueuePayload};
 use chrono::Utc;
 use std::collections::HashMap;
+use crate::models::{produce::ProducePayload, queue::QueuePayload};
 use crate::utils::{namespace::MAIN_NAMESPACE, redis::multi_push};
 use crate::AppState;
 

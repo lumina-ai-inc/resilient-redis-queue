@@ -1,7 +1,7 @@
 use std::sync::Arc;
-use utils::namespace::{ MAIN_NAMESPACE, PRIVATE_NAMESPACE, REGISTRY_NAMESPACE };
-use utils::redis::{ lmove, keys, hexists };
-use configs::deadpool_redis::{ Pool, RedisError };
+use crate::utils::namespace::{ MAIN_NAMESPACE, PRIVATE_NAMESPACE, REGISTRY_NAMESPACE };
+use crate::utils::redis::{ lmove, keys, hexists };
+use crate::utils::config_redis::{ Pool, RedisError };
 
 pub async fn cleanup_orphaned_queues(pool: Arc<Pool>) -> Result<(), RedisError> {
     let mut conn = pool.get().await.expect("Failed to get connection from pool");

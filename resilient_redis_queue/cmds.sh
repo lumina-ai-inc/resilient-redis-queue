@@ -38,7 +38,7 @@ curl -X POST http://0.0.0.0:8000/produce \
 # Consume
 ###############################################################
 
-curl -X POST http://0.0.0.0:8080/consume \
+curl -X POST http://0.0.0.0:8000/consume \
 -H "Content-Type: application/json" \
 -d '{
     "consumer_id": "random",
@@ -47,7 +47,7 @@ curl -X POST http://0.0.0.0:8080/consume \
     "expiration_seconds": 6000
 }'
 
-curl -X POST http://54.219.187.46:8000/consume \
+curl -X POST http://0.0.0.0:8000/consume \
 -H "Content-Type: application/json" \
 -d '{
     "consumer_id": "1",
@@ -59,7 +59,7 @@ curl -X POST http://54.219.187.46:8000/consume \
 ###############################################################
 # Compelete
 ###############################################################
-curl -X POST http://0.0.0.0:8080/complete \
+curl -X POST http://0.0.0.0:8000/complete \
 -H "Content-Type: application/json" \
 -d '[
   {
@@ -69,13 +69,5 @@ curl -X POST http://0.0.0.0:8080/complete \
     "item_index": 1,
     "result": "Success",
     "message": null
-  },
-  {
-    "item_id": "15178937d-e2c3-507f-b6f4-f921e1d6e1c3",
-    "consumer_id": "random",
-    "queue_name": "example1",
-    "item_index": 2,
-    "result": "Failure",
-    "message": "Processed successfully"
   }
 ]'
