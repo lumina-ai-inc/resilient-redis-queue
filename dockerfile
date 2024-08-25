@@ -14,11 +14,11 @@ COPY --from=planner /app/recipe.json recipe.json
 RUN cargo chef cook --release --recipe-path recipe.json
 # Build application
 COPY . .
-RUN cargo build --release --package resilient_redis_queue
+RUN cargo build --release rrq
 
 FROM debian:bookworm-slim as runtime
 WORKDIR /app
-COPY --from=builder /app/target/release/resilient_redis_queue /app/resilient_redis_queue
+COPY --from=builder /app/target/release/rrq /app/rrq
 
 EXPOSE 8000
-ENTRYPOINT ["/app/resilient_redis_queue"]
+ENTRYPOINT ["/app/rrq"]
