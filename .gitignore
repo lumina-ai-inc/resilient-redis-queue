@@ -1,0 +1,42 @@
+.lh
+.env
+.venv
+venv
+.whisper
+.env
+__pycache__
+.DS_Store
+node_modules
+.turbo
+*.log
+dist
+dist-ssr
+*.local
+.env
+.cache
+server/dist
+public/dist
+
+# Ignore Rust build artifacts
+target/
+**/*.rs.bk
+
+# Ignore environment variable files
+.env
+
+# Ignore specific IDE/editor files
+.idea/
+.vscode/
+*.swp
+
+# Ignore compiled libraries
+*.rlib
+
+# Ignore Cargo.lock if it's a library
+Cargo.lock
+
+# Ignore backup files
+*.bak
+*.tmp
+
+.lh
