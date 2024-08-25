@@ -8,8 +8,6 @@ pub async fn complete_data(
     data: web::Json<Vec<StatusPayload>>,
     app_state: web::Data<AppState>
 ) -> impl Responder {
-    println!("Registering status for {:?} items", data.len());
-
     let mut conn: Connection = match app_state.redis_pool.get().await {
         Ok(conn) => conn,
         Err(e) => {

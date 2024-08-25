@@ -1,16 +1,13 @@
 use actix_web::{ web, HttpResponse, Responder };
-use models::rrq::{consume::{ConsumePayload, ConsumeResponse}, queue::QueuePayload};
-use crate::utils::namespace::{ MAIN_NAMESPACE, PRIVATE_NAMESPACE, REGISTRY_NAMESPACE };
-use crate::AppState;
-use crate::utils::redis::{ blmove, lrange, llen, register_in_hash };
+use models::{consume::{ConsumePayload, ConsumeResponse}, queue::QueuePayload};
+use utils::namespace::{ MAIN_NAMESPACE, PRIVATE_NAMESPACE, REGISTRY_NAMESPACE };
+use utils::redis::{ blmove, lrange, llen, register_in_hash };
+use AppState;
 
 pub async fn consume_data(
     data: web::Json<ConsumePayload>,
     app_state: web::Data<AppState>
 ) -> impl Responder {
-
-    println!("Consuming {:?} items", data.item_count);
-
     let mut conn = match app_state.redis_pool.get().await {
         Ok(conn) => conn,
         Err(e) => {

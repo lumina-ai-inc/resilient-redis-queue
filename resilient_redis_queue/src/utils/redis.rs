@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use serde::Serialize;
-use shared::redis::{ cmd, RedisResult, Pipeline, Connection };
+use configs::deadpool_redis::{ cmd, RedisResult, Pipeline, Connection };
 
 
 // Redis Info Operations
