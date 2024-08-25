@@ -1,5 +1,7 @@
 use actix_web::{ web, App, HttpServer };
 use actix_web::rt::time;
+use actix_web::middleware::Logger;
+use env_logger::Env;
 use std::time::Duration;
 use std::sync::Arc;
 
@@ -17,8 +19,6 @@ pub struct AppState {
 #[actix_web::main]
 pub async fn main() -> std::io::Result<()> {
     
-    println!("Starting...");
-
     let redis_pool = Arc::new(create_pool());
     let cleanup_pool = redis_pool.clone();
 
@@ -30,12 +30,16 @@ pub async fn main() -> std::io::Result<()> {
         }
     });
 
+    env_logger::init_from_env(Env::default().default_filter_or("info"));
+
     HttpServer::new(move || {
         let redis_pool = redis_pool.clone();
 
         App::new()
             .app_data(web::Data::new(AppState { redis_pool }))
             .app_data(web::JsonConfig::default().limit(25_165_824)) 
+            .wrap(Logger::default())
+            .wrap(Logger::new("%a %{User-Agent}i"))
             .route("/", web::get().to(routes::health::health_check))
             .route("/information", web::get().to(routes::information::get_information))
             .route("/produce", web::post().to(routes::produce::produce_data))

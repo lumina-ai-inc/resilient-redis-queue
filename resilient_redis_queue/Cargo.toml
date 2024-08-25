@@ -17,3 +17,4 @@ thiserror = "1.0.63"
 deadpool-redis = { version = "0.16.0", features = ["serde"] }
 config = "0.14.0"
 dotenvy = "0.15.7"
+env_logger = "0.11.5"
