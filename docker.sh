@@ -4,7 +4,7 @@
 CURRENT_DIR=$(pwd)
 
 # Define the Docker image name as a variable
-DOCKER_IMAGE_NAME="luminaai/rrq"
+DOCKER_IMAGE_NAME="luminainc/rrq"
 
 # Get the current commit SHA
 SHA=$(git rev-parse --short HEAD)
