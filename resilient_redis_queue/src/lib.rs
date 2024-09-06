@@ -11,15 +11,29 @@ pub mod services;
 pub mod models;
 
 use crate::utils::config_redis::{create_pool, Pool};
+use crate::utils::redis::ping;
 
 pub struct AppState {
     redis_pool: Arc<Pool>,
+}
+
+async fn test_redis_connection(pool: &Pool) -> Result<(), Box<dyn std::error::Error>> {
+    let mut conn = pool.get().await?;
+    ping(&mut conn).await?;
+    Ok(())
 }
 
 #[actix_web::main]
 pub async fn main() -> std::io::Result<()> {
     
     let redis_pool = Arc::new(create_pool());
+
+    // Test Redis connection before starting the server
+    if let Err(e) = test_redis_connection(&redis_pool).await {
+        println!("Failed to connect to Redis: {}. Exiting...", e);
+        std::process::exit(1);
+    }
+
     let cleanup_pool = redis_pool.clone();
 
     actix_web::rt::spawn(async move {

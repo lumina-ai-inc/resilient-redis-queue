@@ -10,6 +10,10 @@ pub async fn info(conn: &mut Connection) -> RedisResult<String> {
     cmd("INFO").query_async(conn).await
 }
 
+pub async fn ping(conn: &mut Connection) -> RedisResult<String> {
+    cmd("PING").query_async(conn).await
+}
+
 
 // Basic Redis Operations
 // ----------------------
