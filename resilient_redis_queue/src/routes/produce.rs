@@ -1,6 +1,7 @@
 use actix_web::{web, HttpResponse, Responder};
 use chrono::Utc;
 use std::collections::HashMap;
+use std::time::Instant;
 use crate::models::{produce::ProducePayload, queue::QueuePayload};
 use crate::utils::{namespace::MAIN_NAMESPACE, redis::multi_push};
 use crate::AppState;
@@ -9,6 +10,8 @@ pub async fn produce_data(
     data: web::Json<Vec<ProducePayload>>,
     app_state: web::Data<AppState>
 ) -> impl Responder {
+
+    let start_time = Instant::now();
 
     if data.len() > 120 {
         return HttpResponse::BadRequest().json("Item count cannot be greater than 120");
@@ -22,6 +25,8 @@ pub async fn produce_data(
             );
         }
     };
+
+    println!("Redis connection established in {:?}", start_time.elapsed());
 
     let mut queue_payloads: HashMap<String, Vec<String>> = HashMap::new();
 
@@ -43,9 +48,14 @@ pub async fn produce_data(
     
         queue_payloads.entry(queue_name).or_default().push(payload_string);
     }
-    
+
+    println!("Queue payloads created in {:?}", start_time.elapsed());
+
     match multi_push(&mut conn, &queue_payloads).await {
-        Ok(_) => HttpResponse::Ok().json("Data produced successfully"),
+        Ok(_) => {
+            println!("Data produced successfully in {:?}", start_time.elapsed());
+            HttpResponse::Ok().json("Data produced successfully")
+        },
         Err(e) => HttpResponse::InternalServerError().json(format!("Failed to publish items: {}", e)),
     }
 }

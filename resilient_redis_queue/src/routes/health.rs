@@ -5,6 +5,5 @@ pub async fn health_check() -> HttpResponse {
     let cfg = Config::from_env().unwrap();
     let version = cfg.version;
     let message = format!("OK - Version {}", version);
-    println!("{}", message);
     HttpResponse::Ok().body(message)
 }

@@ -17,7 +17,6 @@ pub async fn complete_data(
         }
     };
 
-    // Convert to mutable vector and sort by item_index in descending order
     let mut sorted_data = data.into_inner();
     sorted_data.sort_by(|a, b| b.item_index.cmp(&a.item_index));
 
@@ -30,7 +29,7 @@ pub async fn complete_data(
         if let Err(e) = result {
             return HttpResponse::InternalServerError().json(e.to_string());
         }
-    }
+    } 
 
     HttpResponse::Ok().json("Items successfully consumed")
 }
