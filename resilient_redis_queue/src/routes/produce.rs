@@ -10,7 +10,8 @@ pub async fn produce_data(
     data: web::Json<Vec<ProducePayload>>,
     app_state: web::Data<AppState>
 ) -> impl Responder {
-
+    println!("Producing data");
+    
     let start_time = Instant::now();
 
     if data.len() > 120 {
