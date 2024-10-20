@@ -104,3 +104,24 @@ h1, h2 {
 .recharts-legend-item-text {
   color: #00ff00 !important;
 }
+
+.redis-info .info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.redis-info .info-item {
+  background-color: #2e2e2e;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.redis-info h3 {
+  margin-top: 0;
+  color: #00ff00;
+}
+
+.redis-info p {
+  margin: 5px 0;
+}

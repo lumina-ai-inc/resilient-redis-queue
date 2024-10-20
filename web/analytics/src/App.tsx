@@ -4,6 +4,7 @@ import APIKeyForm from './components/APIKeyForm';
 import SearchForm from './components/SearchForm';
 import QueueList from './components/QueueList';
 import QueueChart from './components/QueueChart';
+import RedisInfo from './components/RedisInfo';
 import './App.css';
 
 interface QueueInfo {
@@ -12,15 +13,27 @@ interface QueueInfo {
 }
 
 interface Information {
-  // Define based on the /information endpoint response
-  [key: string]: any;
+  memory: {
+    [key: string]: string;
+  };
+  keyspace: {
+    [key: string]: string;
+  };
+  server: {
+    [key: string]: string;
+  };
+  clients: {
+    [key: string]: string;
+  };
+  stats: {
+    [key: string]: string;
+  };
 }
 
 interface DataPoint {
   timestamp: string;
   queueLength: number;
 }
-
 const App: React.FC = () => {
   const [apiKey, setApiKey] = useState<string>('');
   const [information, setInformation] = useState<Information | null>(null);
@@ -39,6 +52,7 @@ const App: React.FC = () => {
       const response = await axios.get(`${BASE_URL}/information`, { headers });
       setInformation(response.data);
       console.log('Information fetched successfully');
+      console.log('Response from fetchInformation:', response.data);
     } catch (error) {
       console.error('Error fetching information:', error);
     }
@@ -108,6 +122,7 @@ const App: React.FC = () => {
       ) : (
         <div className="content">
           <SearchForm onSearch={handleSearch} />
+          {information && <RedisInfo information={information} />}
           <QueueList queues={queues} dataPoints={dataPoints} />
           <QueueChart data={dataPoints} />
         </div>
