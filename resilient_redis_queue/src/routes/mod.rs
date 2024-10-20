@@ -1,5 +1,6 @@
-pub mod health;
-pub mod produce;
-pub mod consume;
 pub mod complete;
+pub mod consume;
+pub mod health;
 pub mod information;
+pub mod produce;
+pub mod queues;

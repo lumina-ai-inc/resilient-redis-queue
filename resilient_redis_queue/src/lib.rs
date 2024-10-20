@@ -1,16 +1,17 @@
-use actix_web::{ web, App, HttpServer };
-use actix_web::rt::time;
+use actix_cors::Cors;
 use actix_web::middleware::Logger;
+use actix_web::rt::time;
+use actix_web::{web, App, HttpServer};
 use env_logger::Env;
-use std::time::Duration;
 use std::sync::Arc;
-
-pub mod routes;
-pub mod utils;
-pub mod services;
+use std::time::Duration;
 pub mod models;
+pub mod routes;
+pub mod services;
+pub mod utils;
 
-use crate::utils::config_redis::{create_pool, Pool};
+use crate::utils::auth::ApiKeyMiddleware;
+use crate::utils::config_redis::{create_pool, Config, Pool};
 use crate::utils::redis::ping;
 
 pub struct AppState {
@@ -25,8 +26,9 @@ async fn test_redis_connection(pool: &Pool) -> Result<(), Box<dyn std::error::Er
 
 #[actix_web::main]
 pub async fn main() -> std::io::Result<()> {
-    
     let redis_pool = Arc::new(create_pool());
+    let config = Config::from_env().expect("Failed to load configuration");
+    let api_key = config.api_key.clone();
 
     // Test Redis connection before starting the server
     if let Err(e) = test_redis_connection(&redis_pool).await {
@@ -48,18 +50,29 @@ pub async fn main() -> std::io::Result<()> {
 
     HttpServer::new(move || {
         let redis_pool = redis_pool.clone();
+        let api_key = api_key.clone();
 
         App::new()
             .app_data(web::Data::new(AppState { redis_pool }))
-            .app_data(web::JsonConfig::default().limit(25_165_824)) 
+            .app_data(web::JsonConfig::default().limit(25_165_824))
             .wrap(Logger::default())
             .wrap(Logger::new("%a %{User-Agent}i"))
+            .wrap(ApiKeyMiddleware::new(api_key.clone()))
+            .wrap(Cors::permissive())
             .route("/", web::get().to(routes::health::health_check))
-            .route("/information", web::get().to(routes::information::get_information))
+            .route(
+                "/information",
+                web::get().to(routes::information::get_information),
+            )
             .route("/produce", web::post().to(routes::produce::produce_data))
             .route("/consume", web::post().to(routes::consume::consume_data))
             .route("/complete", web::post().to(routes::complete::complete_data))
+            .route(
+                "/queues/{search_str}",
+                web::get().to(routes::queues::list_queues),
+            )
     })
-        .bind("0.0.0.0:8000")?
-        .run().await
+    .bind("0.0.0.0:8000")?
+    .run()
+    .await
 }

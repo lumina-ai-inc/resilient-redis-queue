@@ -1,14 +1,17 @@
-use deadpool_redis::{ Runtime, Config as RedisConfig };
+use config::{Config as ConfigTrait, ConfigError};
+pub use deadpool_redis::{
+    redis::{cmd, Pipeline, RedisError, RedisResult},
+    Connection, Pool,
+};
+use deadpool_redis::{Config as RedisConfig, Runtime};
 use dotenvy::dotenv;
 use serde::Deserialize;
-use config::{ Config as ConfigTrait, ConfigError };
-pub use deadpool_redis::{ Pool, Connection, redis::{ cmd, RedisError, RedisResult, Pipeline } };
 
 #[derive(Debug, Deserialize)]
 pub struct Config {
     pub redis: RedisConfig,
     pub api_key: String,
-    pub version: String
+    pub version: String,
 }
 
 impl Config {
