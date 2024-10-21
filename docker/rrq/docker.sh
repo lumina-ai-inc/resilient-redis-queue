@@ -3,6 +3,8 @@
 # Save the current directory path
 CURRENT_DIR=$(pwd)
 
+cd ../../
+
 # Define the Docker image name as a variable
 DOCKER_IMAGE_NAME="luminainc/rrq"
 

@@ -4,6 +4,7 @@ RUN cargo install cargo-chef
 WORKDIR /app
 
 FROM chef AS planner
+
 COPY resilient_redis_queue/ .
 RUN cargo chef prepare --recipe-path recipe.json
 
@@ -27,7 +28,7 @@ RUN apt-get update -y; \
     ca-certificates \
     ; \
     mkdir -p /app/tmp
-    
+
 COPY --from=builder /app/target/release/rrq /app/rrq
 
 EXPOSE 8000

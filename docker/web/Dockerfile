@@ -1,6 +1,5 @@
 # Build stage
 FROM node:18 as build
-
 WORKDIR /app
 
 COPY web/analytics/ .
