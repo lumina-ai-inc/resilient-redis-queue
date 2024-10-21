@@ -41,7 +41,7 @@ const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('main*');
   const [dataPoints, setDataPoints] = useState<{ [key: string]: DataPoint[] }>({});
 
-  const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     // Retrieve API key from local storage on component mount
