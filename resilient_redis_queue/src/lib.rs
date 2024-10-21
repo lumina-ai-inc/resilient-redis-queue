@@ -51,26 +51,28 @@ pub async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         let redis_pool = redis_pool.clone();
         let api_key = api_key.clone();
-
         App::new()
             .app_data(web::Data::new(AppState { redis_pool }))
             .app_data(web::JsonConfig::default().limit(25_165_824))
             .wrap(Logger::default())
             .wrap(Logger::new("%a %{User-Agent}i"))
-            .wrap(ApiKeyMiddleware::new(api_key.clone()))
             .wrap(Cors::permissive())
+            .service(
+                web::scope("")
+                    .wrap(ApiKeyMiddleware::new(api_key.clone()))
+                    .route(
+                        "/information",
+                        web::get().to(routes::information::get_information),
+                    )
+                    .route("/produce", web::post().to(routes::produce::produce_data))
+                    .route("/consume", web::post().to(routes::consume::consume_data))
+                    .route("/complete", web::post().to(routes::complete::complete_data))
+                    .route(
+                        "/queues/{search_str}",
+                        web::get().to(routes::queues::list_queues),
+                    ),
+            )
             .route("/", web::get().to(routes::health::health_check))
-            .route(
-                "/information",
-                web::get().to(routes::information::get_information),
-            )
-            .route("/produce", web::post().to(routes::produce::produce_data))
-            .route("/consume", web::post().to(routes::consume::consume_data))
-            .route("/complete", web::post().to(routes::complete::complete_data))
-            .route(
-                "/queues/{search_str}",
-                web::get().to(routes::queues::list_queues),
-            )
     })
     .bind("0.0.0.0:8000")?
     .run()
