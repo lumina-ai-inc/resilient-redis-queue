@@ -125,3 +125,22 @@ h1, h2 {
 .redis-info p {
   margin: 5px 0;
 }
+.logout-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  background-color: #ff4136;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #ff1a1a;
+}
+
+header {
+  position: relative;
+}

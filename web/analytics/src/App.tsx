@@ -43,6 +43,14 @@ const App: React.FC = () => {
 
   const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:8000';
 
+  useEffect(() => {
+    // Retrieve API key from local storage on component mount
+    const storedApiKey = localStorage.getItem('apiKey');
+    if (storedApiKey) {
+      setApiKey(storedApiKey);
+    }
+  }, []);
+
   const headers = {
     'X-API-Key': apiKey,
   };
@@ -52,7 +60,6 @@ const App: React.FC = () => {
       const response = await axios.get(`${BASE_URL}/information`, { headers });
       setInformation(response.data);
       console.log('Information fetched successfully');
-      console.log('Response from fetchInformation:', response.data);
     } catch (error) {
       console.error('Error fetching information:', error);
     }
@@ -71,6 +78,17 @@ const App: React.FC = () => {
 
   const handleAPIKeySubmit = (key: string) => {
     setApiKey(key);
+    // Save API key to local storage
+    localStorage.setItem('apiKey', key);
+  };
+
+  const handleLogout = () => {
+    setApiKey('');
+    setInformation(null);
+    setQueues([]);
+    setDataPoints({});
+    // Remove API key from local storage
+    localStorage.removeItem('apiKey');
   };
 
   const handleSearch = (search: string) => {
@@ -116,6 +134,11 @@ const App: React.FC = () => {
     <div className="App">
       <header>
         <h1>Redis Queue Monitor</h1>
+        {apiKey && (
+          <button onClick={handleLogout} className="logout-button">
+            Logout
+          </button>
+        )}
       </header>
       {!apiKey ? (
         <APIKeyForm onSubmit={handleAPIKeySubmit} />
