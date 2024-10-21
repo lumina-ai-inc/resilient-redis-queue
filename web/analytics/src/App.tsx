@@ -12,15 +12,14 @@ import { setApiKey } from "./services/axiosConfig";
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("main*");
+  const storedApiKey = localStorage.getItem("apiKey");
 
   useEffect(() => {
-    // Retrieve API key from local storage on component mount
-    const storedApiKey = localStorage.getItem("apiKey");
     if (storedApiKey) {
       setApiKey(storedApiKey);
       setIsAuthenticated(true);
     }
-  }, []);
+  }, [storedApiKey]);
 
   const { data: information } = useInformation();
   const { data: queueData } = useQueues(searchTerm);
