@@ -5,6 +5,7 @@ WORKDIR /app
 COPY web/analytics/ .
 
 # Install pnpm and dependencies
+RUN npm ci
 RUN npm run build
 
 # Production stage
