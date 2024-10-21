@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './App.css';
+import RedisInfo from './components/RedisInfo';
 import APIKeyForm from './components/APIKeyForm';
 import SearchForm from './components/SearchForm';
 import QueueList from './components/QueueList';
 import QueueChart from './components/QueueChart';
-import RedisInfo from './components/RedisInfo';
-import './App.css';
 
 interface QueueInfo {
   name: string;
@@ -41,7 +41,7 @@ const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [dataPoints, setDataPoints] = useState<{ [key: string]: DataPoint[] }>({});
 
-  const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:8000';
+  const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
   useEffect(() => {
     // Retrieve API key from local storage on component mount

@@ -1,5 +1,4 @@
 import React from 'react';
-import { LineChart, Line, ResponsiveContainer } from 'recharts';
 
 interface QueueInfo {
     name: string;
@@ -16,7 +15,7 @@ interface QueueListProps {
     dataPoints: { [key: string]: DataPoint[] };
 }
 
-const QueueList: React.FC<QueueListProps> = ({ queues, dataPoints }) => {
+const QueueList: React.FC<QueueListProps> = ({ queues }) => {
     return (
         <div className="queue-list">
             <h2>Queues</h2>
