@@ -1,7 +1,16 @@
+:root {
+  --bg-color: #1a1a1a;
+  --text-color: #c0c0c0;
+  --accent-color: #4caf50;
+  --secondary-bg: #2a2a2a;
+  --border-color: #3a3a3a;
+}
+
 body {
-  background-color: #1e1e1e;
-  color: #00ff00;
-  font-family: 'Courier New', Courier, monospace;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
 }
 
 .App {
@@ -12,11 +21,12 @@ body {
 
 header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
+  position: relative;
 }
 
 h1, h2 {
-  color: #00ff00;
+  color: var(--accent-color);
 }
 
 .api-key-form,
@@ -37,29 +47,32 @@ h1, h2 {
 .search-form input {
   padding: 10px;
   margin-bottom: 10px;
-  background-color: #2e2e2e;
-  border: 1px solid #00ff00;
-  color: #00ff00;
+  background-color: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  border-radius: 4px;
 }
 
 .api-key-form button,
 .search-form button {
   padding: 10px;
-  background-color: #00ff00;
-  color: #1e1e1e;
+  background-color: var(--accent-color);
+  color: var(--bg-color);
   border: none;
   cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
 .api-key-form button:hover,
 .search-form button:hover {
-  background-color: #00cc00;
+  background-color: #45a049;
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 30px;
 }
 
 .queue-list {
@@ -74,35 +87,94 @@ h1, h2 {
 .queue-list th,
 .queue-list td {
   padding: 12px;
-  border: 1px solid #00ff00;
+  border: 1px solid var(--border-color);
   text-align: left;
 }
 
 .queue-list th {
-  background-color: #2e2e2e;
+  background-color: var(--secondary-bg);
 }
 
 .queue-chart {
   width: 100%;
   height: 400px;
+  margin-top: 20px;
 }
 
 .recharts-surface {
-  background-color: #2e2e2e;
+  background-color: var(--secondary-bg);
 }
 
 .recharts-cartesian-grid-horizontal line,
 .recharts-cartesian-grid-vertical line {
-  stroke: #00ff00;
+  stroke: var(--border-color);
 }
 
 .recharts-xAxis .recharts-cartesian-axis-tick-value,
 .recharts-yAxis .recharts-cartesian-axis-tick-value {
-  fill: #00ff00;
+  fill: var(--text-color);
+  font-size: 12px;
+}
+
+.recharts-legend-wrapper {
+  padding: 10px !important;
+  background-color: rgba(42, 42, 42, 0.8) !important;
+  border-radius: 4px;
+}
+
+.recharts-default-legend {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+}
+
+.recharts-legend-item {
+  margin-right: 15px !important;
 }
 
 .recharts-legend-item-text {
-  color: #00ff00 !important;
+  color: var(--text-color) !important;
+  font-size: 12px !important;
+}
+
+.recharts-tooltip-wrapper {
+  background-color: rgba(26, 26, 26, 0.9) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.recharts-tooltip-label {
+  color: var(--accent-color) !important;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.recharts-tooltip-item {
+  color: var(--text-color) !important;
+  padding: 4px 8px;
+}
+
+.recharts-tooltip-item-name {
+  color: var(--accent-color) !important;
+}
+
+.recharts-tooltip-item-separator {
+  margin: 0 4px;
+}
+
+.recharts-tooltip-item-value {
+  font-weight: bold;
+}
+
+.recharts-line {
+  stroke-width: 2;
+}
+
+.recharts-dot {
+  fill: var(--bg-color);
+  stroke-width: 2;
 }
 
 .redis-info .info-grid {
@@ -112,35 +184,33 @@ h1, h2 {
 }
 
 .redis-info .info-item {
-  background-color: #2e2e2e;
+  background-color: var(--secondary-bg);
   padding: 15px;
   border-radius: 5px;
 }
 
 .redis-info h3 {
   margin-top: 0;
-  color: #00ff00;
+  color: var(--accent-color);
 }
 
 .redis-info p {
   margin: 5px 0;
 }
+
 .logout-button {
   position: absolute;
   top: 10px;
   right: 10px;
   padding: 5px 10px;
-  background-color: #ff4136;
-  color: white;
+  background-color: #e57373;
+  color: var(--bg-color);
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .logout-button:hover {
-  background-color: #ff1a1a;
-}
-
-header {
-  position: relative;
+  background-color: #ef5350;
 }

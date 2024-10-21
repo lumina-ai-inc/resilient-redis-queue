@@ -38,7 +38,7 @@ const App: React.FC = () => {
   const [apiKey, setApiKey] = useState<string>('');
   const [information, setInformation] = useState<Information | null>(null);
   const [queues, setQueues] = useState<QueueInfo[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('main*');
   const [dataPoints, setDataPoints] = useState<{ [key: string]: DataPoint[] }>({});
 
   const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
@@ -99,13 +99,12 @@ const App: React.FC = () => {
     if (apiKey) {
       fetchInformation();
       fetchQueues(searchTerm);
-      setDataPoints({});
     }
   }, [apiKey, searchTerm]);
 
   useEffect(() => {
     if (apiKey && searchTerm) {
-      const interval = setInterval(async () => {
+      const fetchData = async () => {
         try {
           const encodedSearch = encodeURIComponent(searchTerm);
           const response = await axios.get(`${BASE_URL}/queues/${encodedSearch}`, { headers });
@@ -124,7 +123,11 @@ const App: React.FC = () => {
         } catch (error) {
           console.error('Error updating queue data:', error);
         }
-      }, 1000); // Update every 1 second
+      };
+
+      fetchData(); // Fetch data immediately when component mounts or searchTerm changes
+
+      const interval = setInterval(fetchData, 1000); // Update every 1 second
 
       return () => clearInterval(interval);
     }
@@ -144,7 +147,7 @@ const App: React.FC = () => {
         <APIKeyForm onSubmit={handleAPIKeySubmit} />
       ) : (
         <div className="content">
-          <SearchForm onSearch={handleSearch} />
+          <SearchForm onSearch={handleSearch} defaultValue="main*" />
           {information && <RedisInfo information={information} />}
           <QueueList queues={queues} dataPoints={dataPoints} />
           <QueueChart data={dataPoints} />

@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface SearchFormProps {
     onSearch: (searchTerm: string) => void;
+    defaultValue?: string;
 }
 
-const SearchForm: React.FC<SearchFormProps> = ({ onSearch }) => {
-    const [searchTerm, setSearchTerm] = useState('');
+const SearchForm: React.FC<SearchFormProps> = ({ onSearch, defaultValue = 'main*' }) => {
+    const [searchTerm, setSearchTerm] = useState(defaultValue);
+
+    useEffect(() => {
+        setSearchTerm(defaultValue);
+    }, [defaultValue]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
