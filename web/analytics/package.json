@@ -14,6 +14,7 @@
     "dotenv": "^16.4.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-query": "^3.39.3",
     "recharts": "^2.13.0"
   },
   "devDependencies": {
@@ -27,7 +28,7 @@
     "globals": "^15.9.0",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.7.0",
-    "vite": "^5.4.8",
+    "vite": "^5.4.9",
     "vite-plugin-runtime-env": "^0.1.1"
   }
 }

@@ -1,42 +1,25 @@
-import React from 'react';
+import { QueueListProps } from "../models/components.model";
 
-interface QueueInfo {
-    name: string;
-    length: number;
+export default function QueueList({ queues }: QueueListProps) {
+  return (
+    <div className="queue-list">
+      <h2>Queues</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Length</th>
+          </tr>
+        </thead>
+        <tbody>
+          {queues.map((queue) => (
+            <tr key={queue.name}>
+              <td>{queue.name}</td>
+              <td>{queue.length}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
-
-interface DataPoint {
-    timestamp: string;
-    queueLength: number;
-}
-
-interface QueueListProps {
-    queues: QueueInfo[];
-    dataPoints: { [key: string]: DataPoint[] };
-}
-
-const QueueList: React.FC<QueueListProps> = ({ queues }) => {
-    return (
-        <div className="queue-list">
-            <h2>Queues</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Length</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {queues.map((queue) => (
-                        <tr key={queue.name}>
-                            <td>{queue.name}</td>
-                            <td>{queue.length}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    );
-};
-
-export default QueueList;

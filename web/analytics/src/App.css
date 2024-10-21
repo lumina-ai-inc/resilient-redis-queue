@@ -9,7 +9,7 @@
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   line-height: 1.6;
 }
 
@@ -25,7 +25,8 @@ header {
   position: relative;
 }
 
-h1, h2 {
+h1,
+h2 {
   color: var(--accent-color);
 }
 
@@ -196,6 +197,9 @@ h1, h2 {
 
 .redis-info p {
   margin: 5px 0;
+  overflow: hidden;
+  text-wrap: pretty;
+  text-overflow: ellipsis;
 }
 
 .logout-button {
