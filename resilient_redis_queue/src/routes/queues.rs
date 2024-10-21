@@ -1,4 +1,3 @@
-use crate::utils::namespace;
 use crate::utils::redis;
 use crate::AppState;
 use actix_web::{web, HttpResponse};

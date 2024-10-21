@@ -1,8 +1,8 @@
 use actix_web::dev::{Service, ServiceRequest, ServiceResponse, Transform};
 use actix_web::error::ErrorUnauthorized;
-use actix_web::{Error, HttpMessage};
+use actix_web::Error;
 use futures::future::{ok, Ready};
-use std::future::{ready, Future};
+use std::future::Future;
 use std::pin::Pin;
 use std::rc::Rc;
 use std::task::{Context, Poll};

@@ -58,6 +58,12 @@ pub async fn lrange(conn: &mut Connection, key: &str, start: isize, stop: isize)
     cmd("LRANGE").arg(&[key, &start.to_string(), &stop.to_string()]).query_async(conn).await
 }
 
+// Queue Operations
+// ----------------
+
+pub async fn delete(conn: &mut Connection, queue_name: &str) -> RedisResult<i64> {
+    cmd("DEL").arg(queue_name).query_async(conn).await
+}
 
 // Multi-Queue Operations
 // ----------------------
@@ -79,7 +85,6 @@ pub async fn multi_push(
 
 // Hash Operations
 // ---------------
-
 pub async fn register_in_hash<T: Serialize>(
     conn: &mut Connection,
     hash_key: &str,

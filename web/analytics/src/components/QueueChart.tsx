@@ -44,11 +44,11 @@ export default function QueueChart({ data }: QueueChartProps) {
   }, [data]);
 
   if (Object.keys(data).length === 0) {
-    return <div>Waiting for data...</div>;
+    return <div>No queues available</div>;
   }
 
   if (chartData.length === 0) {
-    return <div>No data available for the selected queues</div>;
+    return <div>No queue data available</div>;
   }
 
   return (

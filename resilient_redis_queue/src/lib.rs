@@ -71,6 +71,10 @@ pub async fn main() -> std::io::Result<()> {
                     .route(
                         "/queues/{search_str}",
                         web::get().to(routes::queues::list_queues),
+                    )
+                    .route(
+                        "/queue/{queue_name}",
+                        web::delete().to(routes::delete::delete_queue),
                     ),
             )
     })
